@@ -98,3 +98,48 @@ SELECT * FROM Account WHERE Cashback>100
 
 SELECT * FROM Orders WHERE EXISTS(SELECT * FROM PRODUCT WHERE Orders.P_ID = PRODUCT.P_ID)
 SELECT Cashback FROM Account WHERE EXISTS(SELECT * FROM CUSTOMER WHERE Account.P_ID = CUSTOMER.P_ID)
+
+CREATE VIEW PRODUCT_IN_DEMAND
+AS 
+SELECT Order_Qty FROM Orders as o
+inner join PRODUCT AS p
+ON o.P_ID = p.P_ID 
+SELECT * FROM PRODUCT_IN_DEMAND
+
+
+CREATE VIEW VIEW1
+AS
+SELECT p.P_ID, p.P_NAME, o.Deliverydate, o.Order_Qty
+FROM PRODUCT p
+INNER JOIN Orders o
+on p.P_ID = o.P_ID
+
+SELECT * from VIEW1
+
+CREATE VIEW VIEW2
+as
+select o.P_ID, o.Deliverydate, o.Order_Qty, o.Pincode, c.C_NAME, c.PAYMENT_MODE
+from Orders o
+inner join CUSTOMER c
+on o.P_ID = c.P_ID
+
+select * from VIEW2
+
+
+CREATE VIEW VIEW3
+as
+select o.P_ID, o.Deliverydate, o.Order_Qty, a.Total_amount, a.cashback
+from Orders o
+inner join Account a
+on o.P_ID = a.P_ID
+
+select * from VIEW3
+
+CREATE VIEW VIEW4
+as
+select c.P_ID, c.C_NAME, c.ADDRESS, a.Total_amount, a.cashback
+from CUSTOMER c
+inner join Account a
+on c.P_ID = a.P_ID
+
+select * from VIEW4
